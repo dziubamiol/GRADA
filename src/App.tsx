@@ -8,6 +8,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 import Root from './pages/Root';
 import Login from './pages/Login';
+import Join from './pages/Join';
 import Settings from './pages/Settings';
 import { ValidateSession } from './API/Session';
 
@@ -21,6 +22,10 @@ const routes: Array<IRoute> = [
     {
         path: '/login',
         component: Login,
+    },
+    {
+        path: '/join',
+        component: Join
     },
     {
         path: '/settings',
