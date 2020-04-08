@@ -18,11 +18,15 @@ export interface IScrollPageContentProps {
      * If page is active window should scroll to it
      */
     isActive: boolean;
+    /**
+     * HTML class attribute
+     */
+    className?: string
     children?: React.ReactNode;
 }
 
 const ScrollPageContent = (props: IScrollPageContentProps) => {
-    const {pageHeight, children, isActive} = props;
+    const {pageHeight, children, isActive, className} = props;
     const classes = useStyles();
     const [distanceFromTop, setDistanceFromTop] = useState();
 
@@ -40,7 +44,7 @@ const ScrollPageContent = (props: IScrollPageContentProps) => {
 
     return (
         <div
-            className={classes.scrollPageContent}
+            className={`${classes.scrollPageContent} ${className}`}
             style={{
                 minHeight: pageHeight
             }}
