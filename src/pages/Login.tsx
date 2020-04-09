@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button } from '@material-ui/core';
 import { useForm } from '../components/hooks/hooks';
 import Validator from '../API/Validator';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
         flex: '3 1',
         textAlign: 'center',
         margin: '0 40px',
-        maxWidth: '470px',
+        maxWidth: '350px',
     },
     logo: {
         flex: '1 1',
@@ -56,7 +57,11 @@ const useStyles = makeStyles(theme => ({
             display: 'none'
 
         }
-    }
+    },
+    link: {
+        width: '100%',
+        textDecoration: 'none'
+    },
 }));
 
 
@@ -117,6 +122,7 @@ const Join = () => {
                                 helperText={errors.get('password')}
                                 onChange={fillForm}
                             />
+
                             <Button
                                 className={classes.button}
                                 color='primary'
@@ -128,14 +134,19 @@ const Join = () => {
                             </Button>
                         </form>
                         <div className={classes.signUpBox}>
-                            <Button
-                                className={`${classes.signUpButton} ${classes.button}`}
-                                fullWidth
-                                variant='contained'
-                                color='primary'
+                            <Link
+                                to='/join?page=0'
+                                className={classes.link}
                             >
-                                Sign Up
-                            </Button>
+                                <Button
+                                    className={`${classes.signUpButton} ${classes.button}`}
+                                    fullWidth
+                                    variant='contained'
+                                    color='primary'
+                                >
+                                    Sign Up
+                                </Button>
+                            </Link>
                         </div>
                         <p>New to our service?</p>
                     </div>

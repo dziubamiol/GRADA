@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Button,
     FormControl,
@@ -10,6 +10,7 @@ import {
 import ScrollPage from '../components/ScrollPage';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import DragnDrop, { FileReceiveEvent } from '../components/DragnDrop';
 
 
 const useStyles = makeStyles(theme => ({
@@ -27,6 +28,7 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'center',
         margin: '0 40px',
         maxWidth: '350px',
+        minWidth: '150px',
     },
     form: {
         width: '100%'
@@ -37,7 +39,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
-        paddingTop: '100px'
+        paddingTop: '100px',
     },
     button: {
         margin: '8px 0 4px 0',
@@ -52,37 +54,19 @@ const useStyles = makeStyles(theme => ({
     link: {
         width: '100%',
         textDecoration: 'none'
+    },
+    icon: {
+        marginBottom: '-10px',
+        fontSize: '2.5em',
     }
 }));
 
 
 const Join = () => {
     const classes = useStyles();
-    const [currentPage, setCurrentPage] = useState(0);
-    const lastPageIndex = 4;
-    // Hello!
-    // login {form}
-    // email {form}
-    // ->
-    // now create your password
-    // password {form}
-    // repeat your password {form}
-    // ->
-    // More about real You
-    // First name {form}
-    // Last name {form}
-    // Position: student, teacher, helicopter {form}
-    // ->
-    // What about photo?
-    // Drag & drop photo {form}
-    // Skip {button}
-    // ->
-    // Success!
-    // Welcome aboard {button}
 
-    const nextPageHandler = () => {
-        setCurrentPage(prevState => prevState < lastPageIndex ? prevState + 1 : 4);
-    }
+
+    const fileHandler = (event: FileReceiveEvent) => console.log(event);
 
 
     return (
@@ -95,7 +79,12 @@ const Join = () => {
                 <React.Fragment>
                     <div className={classes.logo}>
                         <h1>
-                            Hello! 👋
+                            Hello! <span
+                            role='img'
+                            aria-label='hand'
+                        >
+                            👋
+                        </span>
                         </h1>
                         <p>
                             My name is GRADA, lets get started!
@@ -134,7 +123,6 @@ const Join = () => {
                                 className={`${classes.button} ${classes.nextButton}`}
                                 variant='contained'
                                 fullWidth
-                                onClick={nextPageHandler}
                             >
                                 Next
                             </Button>
@@ -145,7 +133,12 @@ const Join = () => {
                 <React.Fragment>
                     <div className={classes.logo}>
                         <h1>
-                            About security 🔑
+                            About security <span
+                            role='img'
+                            aria-label='key'
+                        >
+                            🔑
+                        </span>
                         </h1>
                         <p>
                             Your password should contain 8-16 symbols with numbers, lower and upper case.
@@ -183,7 +176,6 @@ const Join = () => {
                                 className={`${classes.button} ${classes.nextButton}`}
                                 variant='contained'
                                 fullWidth
-                                onClick={nextPageHandler}
                             >
                                 Next
                             </Button>
@@ -194,7 +186,12 @@ const Join = () => {
                 <React.Fragment>
                     <div className={classes.logo}>
                         <h1>
-                            About You 👩‍🎓👩‍🏫👨‍💻
+                            About You <span
+                            role='img'
+                            aria-label='pupil'
+                        >
+                            👩‍🎓👩‍🏫👨‍💻
+                        </span>
                         </h1>
                         <p>
                             Provide your real names and position, this is for your colleagues.
@@ -250,9 +247,79 @@ const Join = () => {
                                 className={`${classes.button} ${classes.nextButton}`}
                                 variant='contained'
                                 fullWidth
-                                onClick={nextPageHandler}
                             >
                                 Next
+                            </Button>
+                        </Link>
+                    </div>
+
+                </React.Fragment>
+                <React.Fragment>
+                    <div className={classes.logo}>
+                        <h1>
+                            Photo? <span
+                            role='img'
+                            aria-label='camera'
+                        >
+                            📸
+                        </span>
+                        </h1>
+                        <p>
+                            Provide any profile photo you want or skip this step, we will use stub.
+                        </p>
+                    </div>
+                    <div className={classes.contentBox}>
+                        <DragnDrop
+                            onFileReceived={fileHandler}
+                            allowedTypes={['image/jpeg', 'image/png']}
+                        >
+                            Drop or click here
+                        </DragnDrop>
+                        <Link
+                            to='/join?page=4'
+                            className={classes.link}
+                        >
+                            <Button
+                                className={`${classes.button} ${classes.nextButton}`}
+                                variant='contained'
+                                fullWidth
+                            >
+                                Next
+                            </Button>
+                        </Link>
+                    </div>
+
+                </React.Fragment>
+                <React.Fragment>
+                    <div className={classes.logo}>
+                        <p
+                            className={classes.icon}
+                        >
+                            <span
+                                role='img'
+                                aria-label='success'
+                            >
+                                🎉
+                            </span>
+                        </p>
+                        <h1>
+                            Success!
+                        </h1>
+                        <p>
+                            Welcome aboard.
+                        </p>
+                    </div>
+                    <div className={classes.contentBox}>
+                        <Link
+                            to='/'
+                            className={classes.link}
+                        >
+                            <Button
+                                className={`${classes.button} ${classes.nextButton}`}
+                                variant='contained'
+                                fullWidth
+                            >
+                                Finish
                             </Button>
                         </Link>
                     </div>
