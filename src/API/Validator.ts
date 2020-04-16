@@ -1,6 +1,6 @@
 export interface IValidatorConfig {
     name: string;
-    type: 'password' | 'email' | 'any';
+    type: 'password' | 'email' | 'username' | 'name' | 'any';
     required: boolean;
 }
 
@@ -33,9 +33,39 @@ export const emailValidator = (inputText: string): string => {
     if (emailRegEx.test(inputText)) {
         return '';
     } else {
-        return 'Incorrect email'
+        return 'Incorrect email';
     }
 };
+
+/**
+ *
+ * @param inputText {string} String to validate
+ * @return {string} String with error message, if no message string is empty
+ */
+export const usernameValidator = (inputText: string): string => {
+    const usernameRegEx = /^[\w]{5,16}$/;
+    if (usernameRegEx.test(inputText)) {
+        return '';
+    } else {
+        return 'Invalid username format';
+    }
+}
+
+/**
+ *
+ * @param inputText {string} String to validate
+ * @return {string} String with error message, if no message string is empty
+ */
+export const nameValidator = (inputText: string): string => {
+    const usernameRegEx = /^[A-z]{1,40}$/;
+    console.log(inputText);
+    if (usernameRegEx.test(inputText)) {
+        return '';
+    } else {
+        console.log(inputText, 'invalid format');
+        return 'Invalid name format';
+    }
+}
 
 /**
  *
@@ -49,7 +79,9 @@ export const anyValidator = (): string => {
 export const validatorHandlers: Map<string, IValidatorHandler> = new Map([
     ['password', passwordValidator],
     ['email', emailValidator],
-    ['any', anyValidator]
+    ['any', anyValidator],
+    ['username', usernameValidator],
+    ['name', nameValidator],
 ]);
 
 
@@ -79,11 +111,11 @@ export default class Validator {
         const fieldsErrors = new Map();
 
         for (const field of this.fields) {
-            if (textFields.has(field.name)) {
+            if (textFields.has(field.name) && textFields.get(field.name) !== '') {
                 const validator = validatorHandlers.get(field.type);
 
                 // @ts-ignore, availability checked inside constructor
-                const validatorMessage = validator(textFields.get(field.type));
+                const validatorMessage = validator(textFields.get(field.name));
                 if (validatorMessage !== '') {
                     fieldsErrors.set(field.name, validatorMessage);
                 }

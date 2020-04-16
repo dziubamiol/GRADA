@@ -9,7 +9,7 @@ interface IPrivateRouter extends RouteProps {
 
 const PrivateRoute = (props: IPrivateRouter) => {
     const {redirectPath, isAuthenticated, children, ...rest} = props;
-
+    console.log(isAuthenticated);
     const toRender = ({location}: RouteComponentProps): React.ReactNode => {
         return isAuthenticated ?
             (children) :

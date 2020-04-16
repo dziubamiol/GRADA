@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Home from './Home';
 import Login from './Login';
-import { ValidateSession } from '../API/Session';
+import { useSelector } from 'react-redux';
+import { IRoot } from '../reducers/root';
 
 
 export default function Root () {
-    const isAuthenticated = ValidateSession();
+    const isAuth = useSelector((state: IRoot) => state.auth);
 
     return (
-        isAuthenticated ? <Home/> : <Login/>
+        isAuth ? <Home/> : <Login/>
     );
 }

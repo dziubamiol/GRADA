@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 
+/**
+ * @description Fills text forms from forms which have 'name' parameter only
+ * @return {[Map<string, string>, (event: React.ChangeEvent<HTMLInputElement>, fieldName?: string) => void]}
+ * formData - Map with filled data, fillForm - function that fills form, pass it to onChange
+ */
 export const useForm = (): [Map<string, string>, (event: React.ChangeEvent<HTMLInputElement>, fieldName?: string) => void] => {
     const [formData, setFormData] = useState<Map<string, string>>(new Map());
 

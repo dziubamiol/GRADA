@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import useJoinStyles from '../../styles/Join';
 import { FormActionElements, formRefFactory, keyDownHandlerFactory, nextPageFactory } from './utils/handlers';
 import { useForm } from '../../../components/hooks/hooks';
 import Validator from '../../../API/Validator';
 
-const Hello = () => {
+const Personal = () => {
     const classes = useJoinStyles();
     const history = useHistory();
     const [formData, fillForm] = useForm();
@@ -14,13 +14,13 @@ const Hello = () => {
 
     const validator = new Validator([
         {
-            name: 'username',
-            type: 'username',
+            name: 'firstName',
+            type: 'name',
             required: true,
         },
         {
-            name: 'email',
-            type: 'email',
+            name: 'lastName',
+            type: 'name',
             required: true,
         }
     ]);
@@ -36,7 +36,7 @@ const Hello = () => {
         return () => {
             const errors = validator.validate(formData);
             setErrors(errors)
-
+            console.log(errors);
             if (errors.size === 0) {
                 console.log('nextPage');
                 nextPage(pageURL);
@@ -48,15 +48,15 @@ const Hello = () => {
         <React.Fragment>
             <div className={classes.logo}>
                 <h1>
-                    Hello! <span
+                    About You <span
                     role='img'
-                    aria-label='hand'
+                    aria-label='pupil'
                 >
-                            👋
+                            👩‍🎓👩‍🏫👨‍💻
                         </span>
                 </h1>
                 <p>
-                    My name is GRADA, lets get started!
+                    Provide your real names and position, this is for your colleagues.
                 </p>
             </div>
             <div className={classes.contentBox}>
@@ -66,42 +66,58 @@ const Hello = () => {
                 >
                     <TextField
                         fullWidth
-                        label='Username'
+                        label='First name'
                         type='text'
-                        name='username'
+                        name='firstName'
                         variant='outlined'
                         margin='dense'
                         required
                         onKeyDown={keyDownHandler}
                         inputRef={(el: HTMLInputElement) => formRef(el)}
-                        autoFocus={true}
+                        error={errors.has('firstName')}
+                        helperText={errors.get('firstName')}
                         onChange={fillForm}
-                        error={errors.has('username')}
-                        helperText={errors.get('username')}
                     />
                     <TextField
                         fullWidth
-                        label='Email'
-                        type='email'
-                        name='email'
+                        label='Last name'
+                        type='text'
+                        name='lastName'
                         variant='outlined'
                         margin='dense'
                         required
                         onKeyDown={keyDownHandler}
                         inputRef={(el: HTMLInputElement) => formRef(el)}
+                        error={errors.has('lastName')}
+                        helperText={errors.get('lastName')}
                         onChange={fillForm}
-                        error={errors.has('email')}
-                        helperText={errors.get('email')}
                     />
+                    <FormControl
+                        variant='outlined'
+                        fullWidth
+                        disabled
+                        margin='dense'
+                    >
+                        <InputLabel>Position</InputLabel>
+                        <Select>
+                            <MenuItem>
+                                Student
+                            </MenuItem>
+                            <MenuItem>
+                                Teacher
+                            </MenuItem>
+                            <MenuItem>
+                                Helicopter
+                            </MenuItem>
+                        </Select>
+                    </FormControl>
                 </form>
-
                 <Button
-
+                    ref={(el: HTMLButtonElement) => formRef(el)}
                     className={`${classes.button} ${classes.nextButton}`}
                     variant='contained'
                     fullWidth
-                    onClick={handleNext('/join?page=1')}
-                    ref={(el: HTMLButtonElement) => formRef(el)}
+                    onClick={handleNext('/join?page=3')}
                 >
                     Next
                 </Button>
@@ -111,4 +127,4 @@ const Hello = () => {
     );
 };
 
-export default Hello;
+export default Personal;
